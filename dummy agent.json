@@ -1,0 +1,807 @@
+{
+  "name": "dummy agent",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "67dbb9b9-40ae-4cc4-a1eb-b26dfef548a7",
+        "responseMode": "responseNode",
+        "options": {
+          "rawBody": false
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -640,
+        -96
+      ],
+      "id": "a35f9b55-f9ff-419d-8b62-2212cbcef425",
+      "name": "Webhook",
+      "webhookId": "67dbb9b9-40ae-4cc4-a1eb-b26dfef548a7"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{$json[\"body\"][\"message\"]}}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        480,
+        -96
+      ],
+      "id": "91f1dc86-45d1-4fda-8c63-b682323946ca",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -416,
+        128
+      ],
+      "id": "f5b1dccc-bea5-4095-96c2-06da67b83744",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "pKIaS857vze8NTyG",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "abcd123",
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -288,
+        128
+      ],
+      "id": "b124d2f5-b08b-4e5b-a89c-3a955ccaf017",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1712,
+        -96
+      ],
+      "id": "283113d6-ce8c-44f6-82a4-a57b20833caf",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "content": "##function to add\n1. web search\n2. calendar access\n3. gmail excess\n4. expense tracking\n5. notes creation\n6. task creation and task deletion\n",
+        "height": 192
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1008,
+        -192
+      ],
+      "typeVersion": 1,
+      "id": "e88ecc24-9301-4657-b092-52f7b8450622",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        128
+      ],
+      "id": "e7ce3bde-01b4-4dfb-acd7-c510cc89735e",
+      "name": "SerpAPI",
+      "credentials": {
+        "serpApi": {
+          "id": "cnpq0mIZpRYgSj4h",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Google search",
+        "height": 112,
+        "width": 150
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -192,
+        160
+      ],
+      "typeVersion": 1,
+      "id": "294a1a1e-686e-4eaf-b1a2-3063ef6b04dc",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Google calender event\n",
+        "width": 224
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -48,
+        112
+      ],
+      "typeVersion": 1,
+      "id": "e43bf990-74f6-4812-bb59-231f74471f13",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "shivani_s@ch.iitr.ac.in",
+          "mode": "list",
+          "cachedResultName": "shivani_s@ch.iitr.ac.in"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -32,
+        128
+      ],
+      "id": "702a3b1f-249c-4213-b0f5-2eed05666795",
+      "name": "Create_event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "1zn1yRR9V5uDpAkL",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "shivani_s@ch.iitr.ac.in",
+          "mode": "list",
+          "cachedResultName": "shivani_s@ch.iitr.ac.in"
+        },
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        96,
+        128
+      ],
+      "id": "d0a3de5f-2616-4522-b952-fbf095952e6d",
+      "name": "Get_many_event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "1zn1yRR9V5uDpAkL",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "simple": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Simplify', ``, 'boolean') }}",
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        128
+      ],
+      "id": "c413cfb1-d398-4f54-b33c-220955c96af5",
+      "name": "get_messages",
+      "webhookId": "a5755e48-07eb-4513-94ab-b6809e6212ca",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "desaI8PJv8Nsrbmq",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "emailType": "text",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": true,
+          "senderName": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Sender_Name', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        352,
+        128
+      ],
+      "id": "d60eca20-22a4-4c54-a592-2a7944f3f0c4",
+      "name": "send_messages",
+      "webhookId": "a5755e48-07eb-4513-94ab-b6809e6212ca",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "desaI8PJv8Nsrbmq",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        480,
+        128
+      ],
+      "id": "c01327b4-480f-484e-a35a-ec093b49c6db",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 256
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        208,
+        112
+      ],
+      "typeVersion": 1,
+      "id": "74834f6e-3f29-4be9-9e1f-495577aadaf0",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Document', ``, 'string') }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Sheet', ``, 'string') }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        608,
+        128
+      ],
+      "id": "c3d27e75-fd05-4694-af82-a922501e8c1f",
+      "name": "get_expenses",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "bKdkMyYzCj9gzFPU",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1xLGsKvzrew1QKdtbCr8Ebymebjv-WcMV6Nv2uF8OTQM",
+          "mode": "list",
+          "cachedResultName": "expense tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1xLGsKvzrew1QKdtbCr8Ebymebjv-WcMV6Nv2uF8OTQM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1xLGsKvzrew1QKdtbCr8Ebymebjv-WcMV6Nv2uF8OTQM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "date": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('date', ``, 'string') }}",
+            "amount": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('amount', ``, 'string') }}",
+            "for what": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('for_what', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "amount",
+              "displayName": "amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "for what",
+              "displayName": "for what",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        736,
+        128
+      ],
+      "id": "aa8e1d27-090c-4536-99cc-6b90b6515030",
+      "name": "add_expenses",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "bKdkMyYzCj9gzFPU",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "",
+        "width": 336
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        480,
+        112
+      ],
+      "typeVersion": 1,
+      "id": "c2d77b90-bfbd-401c-9e1b-bf3d6b5269d5",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## notes \n\n",
+        "width": 368
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        848,
+        112
+      ],
+      "typeVersion": 1,
+      "id": "ccc0345f-2df6-463b-ad65-30396f200d5f",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "folderId": "1U0TprDv47HfFJ4LoUlbc4FcC_WukDoLW",
+        "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        864,
+        128
+      ],
+      "id": "18a7ebac-d9cb-48b9-890b-a9aaf75aa380",
+      "name": "Create_Docs",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "H0BOcWYrYeTTThAz",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Doc_ID_or_URL', ``, 'string') }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('actionFields0_Text', ``, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        992,
+        128
+      ],
+      "id": "b73282c4-b7af-4621-a186-f3c5cbd08efb",
+      "name": "update_Docs",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "H0BOcWYrYeTTThAz",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Doc_ID_or_URL', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        128
+      ],
+      "id": "0acfec28-b3e1-41be-a649-a24a6ace9b2d",
+      "name": "get_Docs",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "H0BOcWYrYeTTThAz",
+          "name": "Google Docs account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "task": "MDExMTk0Nzg1NzUxMTM0NDg3NjM6MDow",
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        128
+      ],
+      "id": "c94cd073-5754-473d-96cc-9bbc8078a8b9",
+      "name": "Get many_Tasks",
+      "credentials": {
+        "googleTasksOAuth2Api": {
+          "id": "FATV1R85Ih7zMPfW",
+          "name": "Google Tasks account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "task": "MDExMTk0Nzg1NzUxMTM0NDg3NjM6MDow",
+        "taskId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Task_ID', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        128
+      ],
+      "id": "ad33cce2-f5be-49a6-ba88-e273c5e883d5",
+      "name": "Delete_Tasks",
+      "credentials": {
+        "googleTasksOAuth2Api": {
+          "id": "FATV1R85Ih7zMPfW",
+          "name": "Google Tasks account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Tasks\n",
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1264,
+        112
+      ],
+      "typeVersion": 1,
+      "id": "1fc5b3a6-46ef-4d97-8bac-a68c380b0e70",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "task": "MDExMTk0Nzg1NzUxMTM0NDg3NjM6MDow",
+        "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        1504,
+        128
+      ],
+      "id": "360e304e-c336-4691-9946-70ded3d73e82",
+      "name": "Create _tasks",
+      "credentials": {
+        "googleTasksOAuth2Api": {
+          "id": "FATV1R85Ih7zMPfW",
+          "name": "Google Tasks account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Respond to Webhook": [
+      {
+        "json": {
+          "output": "Pizza, a dish beloved worldwide, has a surprisingly long and fascinating history that stretches back thousands of years, far beyond the pepperoni and cheese we know today!\n\nHere's a journey through its evolution:\n\n1.  **Ancient Roots (Thousands of Years Ago): The Proto-Pizza**\n    *   The concept of flatbreads with toppings dates back to ancient times. Cultures across the Mediterranean, including the **Egyptians, Greeks, and Romans**, made various forms of flatbreads often topped with olive oil, herbs, spices, and other local ingredients. Think of a simple focaccia or a Roman *panis focacius* (hearth bread).\n    *   These were not \"pizza\" as we know it, but they were the conceptual ancestors: dough baked flat with savory additions.\n\n2.  **Naples, Italy (17th - 18th Centuries): The Birth of Modern Pizza**\n    *   The pizza we recognize today truly began to take shape in **Naples, Italy**, around the late 17th and early 18th centuries.\n    *   Naples was a bustling, crowded port city, and many of its poorer inhabitants needed fast, inexpensive food. Street vendors started selling flatbreads topped with ingredients like tomatoes (which had arrived from the Americas but were initially viewed with suspicion), cheese (often a simple local variety), oil, and garlic.\n    *   This was the food of the working class, cooked in wood-fired ovens and often eaten on the go.\n\n3.  **The Margherita Moment (1889): Pizza Goes Royal**\n    *   The pivotal moment often cited is the creation of the **Pizza Margherita in 1889**.\n    *   Queen Margherita of Savoy visited Naples, and legend has it that she grew tired of the elaborate French cuisine she was often served. Raffaele Esposito, a local pizzaiolo (pizza maker) from Pizzeria Brandi, was commissioned to make her a selection of pizzas.\n    *   He created three, but the one she reportedly loved the most was topped with **tomatoes (red), mozzarella (white), and fresh basil (green)** – deliberately representing the colors of the Italian flag. This simple, patriotic combination elevated pizza from a common street food to something worthy of a queen.\n\n4.  **Arrival in America (Late 19th - Early 20th Century): Immigrant Food**\n    *   When Italian immigrants began arriving in the United States in large numbers, particularly in cities like New York, Chicago, and Boston, they brought their culinary traditions with them.\n    *   The first pizzerias in America were established in these Italian-American communities. **Lombardi's** in New York City, which opened in 1905, is often credited as the first licensed pizzeria in the U.S.\n    *   Initially, pizza was primarily consumed by Italian immigrants and was considered an ethnic food.\n\n5.  **Post-World War II (1940s onwards): Mainstream Phenomenon**\n    *   It wasn't until after World War II that pizza exploded in popularity across America. American soldiers returning from Italy had developed a taste for pizza during their time abroad.\n    *   This exposure, combined with the rise of chains and convenience foods, propelled pizza into the American mainstream.\n    *   Innovations like frozen pizza and delivery services further cemented its place as a staple.\n\n6.  **Globalization and Modern Era (Late 20th Century - Present): Endless Variations**\n    *   From its humble origins, pizza has become a global culinary phenomenon. It has adapted to local tastes and ingredients in virtually every country, leading to an incredible diversity of styles and toppings.\n    *   Today, we have Neapolitan, New York-style, Chicago deep dish, Roman, Californian, Detroit, St. Louis, and countless other regional variations, each with its unique crust, sauce, cheese, and topping philosophy.\n\nFrom a simple flatbread for sustenance to a royal delicacy and finally a global icon, pizza's journey is a testament to its delicious versatility and universal appeal!"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ],
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "localhost:5678",
+            "user-agent": "python-requests/2.32.5",
+            "accept-encoding": "gzip, deflate",
+            "accept": "*/*",
+            "connection": "keep-alive",
+            "content-length": "50",
+            "content-type": "application/json"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "message": "write an email to shivanisinghvns2006@gmail.com and write welldone for the presentation and add some more appraisal to her and also it should be formal"
+          },
+          "webhookUrl": "http://localhost:5678/webhook-test/67dbb9b9-40ae-4cc4-a1eb-b26dfef548a7",
+          "executionMode": "test"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create_event": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_many_event": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_messages": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "send_messages": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_expenses": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_expenses": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create_Docs": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_Docs": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_Docs": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many_Tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete_Tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create _tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "fecded46-1557-4473-85f1-a1e8195f8a84",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2101b03833d5131cdd4cd629afac13938c5f1b7b5eb5a434c9a6b9b6a61d64df"
+  },
+  "id": "QSO69PUGQ1724lDk",
+  "tags": []
+}
